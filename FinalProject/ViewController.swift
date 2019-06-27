@@ -191,20 +191,37 @@ class ViewController: UIViewController {
         eventLabel.text = "One final strike and the witch explodes in a burst of light. In her wake lies a bundle of five healing potions. Huzzah!"
         potionsCount += 5
         healButton.setTitle("Heal(\(potionsCount))", for: .normal)
+        killCount += 1
         enemyHealthLabel.text = "0"
         noticed = false
         exploreMode()
     }
     
     func finalBossDefeated() {
+        enemyHealthLabel.text = "0"
         eventLabel.text = "With my death, this entire Dungeon falls apart, along with all of its treasure. Congratulations, you got the Genocide ending. Are you happy with that?"
-        speechButton.setTitle("Restart", for: .normal)
+        helpButton.setTitle("Restart", for: .normal)
+        helpButton.isHidden = false
+        speechButton.isHidden = true
         sneakButton.isHidden = true
         strengthButton.isHidden = true
         gameOver = true
     }
+    
+    func pacifistEnding() {
+        eventLabel.text = "By now you know that I am the Dungeon Master. I built the walls of this crypt with my own fingers and summoned every 'foe' here to guard it. Yet you didn't kill a single one of them. Even when they harmed you, you took the pacifist's route. For all that clever work, you truly deserve the riches of my dungeon. I'll send you back out when you get all you can carry. Congratulations!"
+        helpButton.setTitle("Finish", for: .normal)
+        helpButton.isHidden = false
+        leftButton.isHidden = true
+        straightButton.isHidden = true
+        rightButton.isHidden = true
+        gameOver = true
+    }
+    
     func restart() {
-        speechButton.setTitle("Speech", for: .normal)
+        easterEggTracker = 0
+        killCount = 0
+        straightButton.setTitle("Forward", for: .normal)
         eventLabel.text = ("Dungeon Delver")
         
         helpButton.isHidden = false
@@ -214,6 +231,8 @@ class ViewController: UIViewController {
         enemyHealthLabel.isHidden = true
         staticEnemyHealthLabel.isHidden = true
         healButton.isHidden = true
+        currentHealth = 20
+        healthLabel.text = "\(currentHealth)"
         potionsCount = 5
         healButton.setTitle("Heal(\(potionsCount))", for: .normal)
         
@@ -250,8 +269,11 @@ class ViewController: UIViewController {
     func youDied() {
         currentRoom = 0.0
         speechButton.isHidden = true
-        straightButton.setTitle("Restart", for: .normal)
-        straightButton.isHidden = false
+        helpButton.setTitle("Restart", for: .normal)
+        helpButton.isHidden = false
+        straightButton.isHidden = true
+        leftButton.isHidden = true
+        rightButton.isHidden = true
         sneakButton.isHidden = true
         strengthButton.isHidden = true
         gameOver = true
@@ -264,6 +286,7 @@ class ViewController: UIViewController {
             noticed = false
             if enemies.goblinIsAlive == true { // Goblin's room
                 eventLabel.text = "You pick the left path. As you cautiously enter its room, you notice a drop in visibility, as the interior is dimly lit with only a single torch hung from the ceiling over an empty table. Despite this, you make out a small goblin with its back to you, facing another doorway dead ahead. How will you deal with this creature?"
+                print(enemies.goblinIsAlive)
                 combatMode()
                 currentEnemyHealth = enemies.goblinHealth
                 enemyHealthLabel.text = "\(currentEnemyHealth)"
@@ -357,13 +380,7 @@ class ViewController: UIViewController {
             print(killCount)
         } else if currentRoom == 4.0 {
             if killCount == 0 {
-                eventLabel.text = "By now you know that I am the Dungeon Master. I built the walls of this crypt with my own fingers and summoned every 'foe' here to guard it. Yet you didn't kill a single one of them. Even when they harmed you, you took the pacifist's route. For all that clever work, you truly deserve the riches of my dungeon. I'll send you back out when you get all you can carry. Congratulations!"
-                speechButton.setTitle("Finish", for: .normal)
-                speechButton.isHidden = false
-                leftButton.isHidden = true
-                straightButton.isHidden = true
-                rightButton.isHidden = true
-                gameOver = true
+                pacifistEnding()
             } else if killCount == 5 {
                 eventLabel.text = "I don't know whether to be impressed or horrified. You killed every single one of my children, hunted them down like animals. I get that this is just a game to you, but have a little class! Of course, this Genocide run won't be completed until you defeat me, the Final Boss!"
                 genocideBoss = true
@@ -377,11 +394,6 @@ class ViewController: UIViewController {
                 currentEnemyHealth = enemies.hardBossHealth
                 enemyHealthLabel.text = "\(currentEnemyHealth)"
             }
-        }
-        if gameOver == true {
-            restart()
-            straightButton.setTitle("Forward", for: .normal)
-            eventLabel.text = "Dungeon Delver"
         }
     }
     @IBAction func rightButtonPressed(_ sender: UIButton) {
@@ -688,8 +700,12 @@ class ViewController: UIViewController {
                     enemyHealthLabel.text = "\(currentEnemyHealth)"
                 }
             }
+            if currentEnemyHealth <= 0 {
+                enemies.bossIsAlive = false
+                finalBossDefeated()
+            }
         }
-        if currentHealth <= 0 {
+                if currentHealth <= 0 {
             healthLabel.text = "0"
             youDied()
         }
@@ -947,6 +963,10 @@ class ViewController: UIViewController {
                     enemyHealthLabel.text = "\(currentEnemyHealth)"
                 }
             }
+            if currentEnemyHealth <= 0 {
+                enemies.bossIsAlive = false
+                finalBossDefeated()
+            }
         }
         if currentHealth <= 0 {
             healthLabel.text = "0"
@@ -957,7 +977,7 @@ class ViewController: UIViewController {
     @IBAction func healButtonPressed(_ sender: UIButton) {
         if currentHealth == 20 {
             eventLabel.text = "It would be unwise to heal yourself without being injured"
-        } else if currentHealth > 20 {
+        } else if currentHealth >= 21 {
             currentHealth = 20
             healthLabel.text = "\(currentHealth)"
         } else if potionsCount == 0 {
@@ -971,7 +991,12 @@ class ViewController: UIViewController {
     }
     
     @IBAction func helpButtonPressed(_ sender: UIButton) {
-        eventLabel.text = "Dungeon Delver is a text based adventure, meaning everything that happens in this game will be told to you through messages like this. Take cues from these messages to decide what action to complete. The top buttons will move you throughout the room when you are able to. The bottom buttons, Sneak, Speech, and Strength, are your combat actions. Sneak normally does less damage, but has a higher chance of hitting. It may do more if an enemy doesn't seem to notice you. Strength acts the opposite: more damage, but less chance of hitting. Speech lets you talk to your foes, as you are able to get out of fighting some of them. The Heal button up top will restore your health. Press forward to enter the dungeon, and good luck!"
+        if gameOver == false {
+          eventLabel.text = "Dungeon Delver is a text based adventure, meaning everything that happens in this game will be told to you through messages like this. Take cues from these messages to decide what action to complete. The top buttons will move you throughout the room when you are able to. The bottom buttons, Sneak, Speech, and Strength, are your combat actions. Sneak normally does less damage, but has a higher chance of hitting. It may do more if an enemy doesn't seem to notice you. Strength acts the opposite: more damage, but less chance of hitting. Speech lets you talk to your foes, as you are able to get out of fighting some of them. The Heal button up top will restore your health. Press forward to enter the dungeon, and good luck!"
+        } else if gameOver == true {
+           restart()
+            helpButton.setTitle("Help", for: .normal)
+        }
     }
 }
 
