@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 @IBDesignable
 class DesignableView: UIView {
@@ -39,6 +40,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var leftButton: UIButton!
     @IBOutlet weak var straightButton: UIButton!
     @IBOutlet weak var rightButton: UIButton!
+    
+    var audioPlayer = AVAudioPlayer()
     
     var currentLevel = 0
     var currentRoom = 0.0
@@ -84,6 +87,22 @@ class ViewController: UIViewController {
         currentRoom = 0.0
         gameOver = false
         
+        playSound(soundName: "ascending", audioPlayer: &audioPlayer)
+        audioPlayer.numberOfLoops = -1
+        
+    }
+    
+    func playSound(soundName: String, audioPlayer: inout AVAudioPlayer) { //soundplaying func
+        if let sound = NSDataAsset(name: soundName) {
+            do {
+                try audioPlayer = AVAudioPlayer(data: sound.data)
+                audioPlayer.play()
+            } catch {
+                print("ERROR: Data from \(soundName) could not be played as an audio file")
+            }
+        } else {
+            print("ERROR: could not load data from file \(soundName)")
+        }
     }
     
     func diceRoll() {
@@ -164,7 +183,6 @@ class ViewController: UIViewController {
     func foeDefeated() {
         eventLabel.text = "One final strike and your foe falls before you"
         enemyHealthLabel.text = "0"
-        inCombat = false
         killCount += 1
         exploreMode()
     }
@@ -174,7 +192,7 @@ class ViewController: UIViewController {
         potionsCount += 5
         healButton.setTitle("Heal(\(potionsCount))", for: .normal)
         enemyHealthLabel.text = "0"
-        inCombat = false
+        noticed = false
         exploreMode()
     }
     
@@ -196,6 +214,7 @@ class ViewController: UIViewController {
         enemyHealthLabel.isHidden = true
         staticEnemyHealthLabel.isHidden = true
         healButton.isHidden = true
+        potionsCount = 5
         healButton.setTitle("Heal(\(potionsCount))", for: .normal)
         
         leftButton.isHidden = true
@@ -209,6 +228,23 @@ class ViewController: UIViewController {
         helmetOn = true
         currentRoom = 0.0
         gameOver = false
+        
+        enemies.goblinHealth = 5
+        enemies.goblinIsAlive = true
+        enemies.hobgoblinHealth = 7
+        enemies.hobgoblinIsAlive = true
+        enemies.warriorHealth = 8
+        enemies.warriorIsAlive = true
+        enemies.knightHealth = 25
+        enemies.knightIsAlive = true
+        enemies.ghostHealth = 1
+        enemies.ghostIsAlive = true
+        enemies.witchHealth = 10
+        enemies.witchIsAlive = true
+        enemies.bossHealth = 20
+        enemies.bossIsAlive = true
+        enemies.hardBossHealth = 1000
+        enemies.hardBossIsAlive = true
     }
     
     func youDied() {
@@ -246,8 +282,8 @@ class ViewController: UIViewController {
             currentRoom += 0.1
             eventLabel.text = "You double back into the main lobby. Nothing has changed about the room since you last visited: one door on the left where you came from, one straight ahead, and one to the right"
         } else if currentRoom == 1.9 { // Ghost's room from Witch's
+            currentRoom += 0.1
             if enemies.ghostIsAlive == true {
-                currentRoom += 0.1
                 eventLabel.text = "You head through the left doorway. This room looks like a dining hall, with empty plates and mugs stacked on tables in each corner. A ghostly echo fills the room, and a translucent figure materializes in the center of the room. Its foggy eyes are fixed on you. What will you do?"
                 combatMode()
                 currentEnemyHealth = enemies.ghostHealth
@@ -264,6 +300,7 @@ class ViewController: UIViewController {
                 enemyHealthLabel.text = "\(currentEnemyHealth)"
             } else if enemies.hobgoblinIsAlive == false {
                 eventLabel.text = "You return to the room once inhabited by the hobgoblin. In the darkness, you see a doorway ahead and to the right"
+                print("I should be in")
             }
         } else if currentRoom == 3.0 {
             eventLabel.text = "Is that a trapdoor you see to a hidden room??? Nope. Just more armor"
@@ -316,7 +353,8 @@ class ViewController: UIViewController {
             enemyHealthLabel.text = "\(currentEnemyHealth)"
         } else if currentRoom == 3.0 { // Final Boss room
             currentRoom += 1.0
-            eventLabel.text = "With much effort, you push the intimidating door open. Like all the others, it slams shut and seals behind you. Inside is a plethora of gold, gems, and all other sorts of treasure. Grand stone pillars are the only things that grow out of the piles of valuables. At the very end of the hall is a wooden throne, modest in comparison to the rest of the room. A hooded figure sits in it. 'Welcome,' he says. 'Press that forward button and come here.'"
+            eventLabel.text = "With much effort, you push the intimidating door open, leading you into the final room. Like all the others, it slams shut and seals behind you. Inside is a plethora of gold, gems, and all other sorts of treasure. Grand stone pillars are the only things that grow out of the piles of valuables. At the very end of the hall is a wooden throne, modest in comparison to the rest of the room. A hooded figure sits in it. 'Welcome,' he says. 'Press that forward button and come here.'"
+            print(killCount)
         } else if currentRoom == 4.0 {
             if killCount == 0 {
                 eventLabel.text = "By now you know that I am the Dungeon Master. I built the walls of this crypt with my own fingers and summoned every 'foe' here to guard it. Yet you didn't kill a single one of them. Even when they harmed you, you took the pacifist's route. For all that clever work, you truly deserve the riches of my dungeon. I'll send you back out when you get all you can carry. Congratulations!"
@@ -326,7 +364,7 @@ class ViewController: UIViewController {
                 straightButton.isHidden = true
                 rightButton.isHidden = true
                 gameOver = true
-            } else if killCount == 6 {
+            } else if killCount == 5 {
                 eventLabel.text = "I don't know whether to be impressed or horrified. You killed every single one of my children, hunted them down like animals. I get that this is just a game to you, but have a little class! Of course, this Genocide run won't be completed until you defeat me, the Final Boss!"
                 genocideBoss = true
                 combatMode()
