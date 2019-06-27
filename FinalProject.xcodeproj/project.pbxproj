@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6619FCD322C238480018D769 /* PressStart2P.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6619FCD222C238480018D769 /* PressStart2P.ttf */; };
+		6619FCD522C239160018D769 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6619FCD422C239160018D769 /* Constants.swift */; };
+		6619FCD722C240830018D769 /* Enemies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6619FCD622C240830018D769 /* Enemies.swift */; };
 		664EFD9F22B8D9EB003DA8D9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664EFD9E22B8D9EB003DA8D9 /* AppDelegate.swift */; };
 		664EFDA122B8D9EB003DA8D9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664EFDA022B8D9EB003DA8D9 /* ViewController.swift */; };
 		664EFDA422B8D9EB003DA8D9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 664EFDA222B8D9EB003DA8D9 /* Main.storyboard */; };
@@ -15,6 +18,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6619FCD222C238480018D769 /* PressStart2P.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = PressStart2P.ttf; sourceTree = "<group>"; };
+		6619FCD422C239160018D769 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		6619FCD622C240830018D769 /* Enemies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enemies.swift; sourceTree = "<group>"; };
 		664EFD9B22B8D9EB003DA8D9 /* FinalProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FinalProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		664EFD9E22B8D9EB003DA8D9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		664EFDA022B8D9EB003DA8D9 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -35,6 +41,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6619FCD122C237DC0018D769 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				6619FCD222C238480018D769 /* PressStart2P.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 		664EFD9222B8D9EB003DA8D9 = {
 			isa = PBXGroup;
 			children = (
@@ -54,8 +68,11 @@
 		664EFD9D22B8D9EB003DA8D9 /* FinalProject */ = {
 			isa = PBXGroup;
 			children = (
+				6619FCD122C237DC0018D769 /* Fonts */,
 				664EFD9E22B8D9EB003DA8D9 /* AppDelegate.swift */,
 				664EFDA022B8D9EB003DA8D9 /* ViewController.swift */,
+				6619FCD622C240830018D769 /* Enemies.swift */,
+				6619FCD422C239160018D769 /* Constants.swift */,
 				664EFDA222B8D9EB003DA8D9 /* Main.storyboard */,
 				664EFDA522B8D9EE003DA8D9 /* Assets.xcassets */,
 				664EFDA722B8D9EE003DA8D9 /* LaunchScreen.storyboard */,
@@ -122,6 +139,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6619FCD322C238480018D769 /* PressStart2P.ttf in Resources */,
 				664EFDA922B8D9EE003DA8D9 /* LaunchScreen.storyboard in Resources */,
 				664EFDA622B8D9EE003DA8D9 /* Assets.xcassets in Resources */,
 				664EFDA422B8D9EB003DA8D9 /* Main.storyboard in Resources */,
@@ -137,6 +155,8 @@
 			files = (
 				664EFDA122B8D9EB003DA8D9 /* ViewController.swift in Sources */,
 				664EFD9F22B8D9EB003DA8D9 /* AppDelegate.swift in Sources */,
+				6619FCD722C240830018D769 /* Enemies.swift in Sources */,
+				6619FCD522C239160018D769 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
