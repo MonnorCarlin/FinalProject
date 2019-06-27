@@ -975,18 +975,48 @@ class ViewController: UIViewController {
     }
     
     @IBAction func healButtonPressed(_ sender: UIButton) {
-        if currentHealth == 20 {
-            eventLabel.text = "It would be unwise to heal yourself without being injured"
-        } else if currentHealth >= 21 {
-            currentHealth = 20
-            healthLabel.text = "\(currentHealth)"
-        } else if potionsCount == 0 {
-            eventLabel.text = "You are out of potions"
+        if currentRoom == 3.0 {
+            if currentHealth == 20 {
+                eventLabel.text = "It would be unwise to heal yourself without being injured"
+            } else if currentHealth >= 21 {
+                currentHealth = 20
+                healthLabel.text = "\(currentHealth)"
+            } else if potionsCount == 0 {
+                eventLabel.text = "You are out of potions"
+            } else {
+                currentHealth += 5
+                healthLabel.text = "\(currentHealth)"
+                potionsCount -= 1
+                healButton.setTitle("Heal(\(potionsCount))", for: .normal)
+            }
+        } else if currentRoom == 4.0 {
+            if currentHealth == 20 {
+                eventLabel.text = "It would be unwise to heal yourself without being injured"
+            } else if currentHealth >= 21 {
+                currentHealth = 20
+                healthLabel.text = "\(currentHealth)"
+            } else if potionsCount == 0 {
+                eventLabel.text = "You are out of potions"
+            } else {
+                currentHealth += 5
+                healthLabel.text = "\(currentHealth)"
+                potionsCount -= 1
+                healButton.setTitle("Heal(\(potionsCount))", for: .normal)
+            }
         } else {
-            currentHealth += 5
-            healthLabel.text = "\(currentHealth)"
-            potionsCount -= 1
-            healButton.setTitle("Heal(\(potionsCount))", for: .normal)
+            if currentHealth == 20 {
+                eventLabel.text = "It would be unwise to heal yourself without being injured"
+            } else if currentHealth >= 21 {
+                currentHealth = 20
+                healthLabel.text = "\(currentHealth)"
+            } else if potionsCount == 0 {
+                eventLabel.text = "You are out of potions"
+            } else {
+                currentHealth += 5
+                healthLabel.text = "\(currentHealth)"
+                potionsCount -= 1
+                healButton.setTitle("Heal(\(potionsCount))", for: .normal)
+            }
         }
     }
     
