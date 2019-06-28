@@ -444,9 +444,7 @@ class ViewController: UIViewController {
             } else if easterEggTracker == 13 {
                 potionsCount += 20
                 healButton.setTitle("Heal(\(potionsCount))", for: .normal)
-                currentHealth += 50
-                healthLabel.text = "\(currentHealth)"
-                eventLabel.text = "Good job you found the Easter Egg. Here's some free health and potions as a reward. This game was made by me, Connor Marlin, as a final project for my Learn to Code In Swift summer course through Boston College Ireland. Special thanks to Professor Gallaugher for teaching me how to use this and Eric Skiff for the music. Other than that, just remember these useless numbers: 1560 0565 7602"
+                eventLabel.text = "Good job you found the Easter Egg. Here's some free potions as a reward. This game was made by me, Connor Marlin, as a final project for my Learn to Code In Swift summer course through Boston College Ireland. Special thanks to Professor Gallaugher for teaching me how to use this and Eric Skiff for the music. Other than that, just remember these useless numbers: 1560 0565 7602"
             } else {
                 eventLabel.text = "Good job you found the Easter Egg. Here's some free health and potions as a reward. This game was made by me, Connor Marlin, as a final project for my Learn to Code In Swift summer course through Boston College Ireland. Special thanks to Professor Gallaugher for teaching me how to use this. Other than that, just remember these useless numbers: 1560 0565 7602"
             }
@@ -974,38 +972,11 @@ class ViewController: UIViewController {
     }
     
     @IBAction func healButtonPressed(_ sender: UIButton) {
-        if currentRoom == 3.0 {
-            if currentHealth == 20 {
+        if currentHealth == 20 {
                 eventLabel.text = "It would be unwise to heal yourself without being injured"
-            } else if currentHealth >= 21 {
-                currentHealth = 20
-                healthLabel.text = "\(currentHealth)"
-            } else if potionsCount == 0 {
-                eventLabel.text = "You are out of potions"
-            } else {
-                currentHealth += 5
-                healthLabel.text = "\(currentHealth)"
+            } else if currentHealth + 5 >= 21 {
                 potionsCount -= 1
                 healButton.setTitle("Heal(\(potionsCount))", for: .normal)
-            }
-        } else if currentRoom == 4.0 {
-            if currentHealth == 20 {
-                eventLabel.text = "It would be unwise to heal yourself without being injured"
-            } else if currentHealth >= 21 {
-                currentHealth = 20
-                healthLabel.text = "\(currentHealth)"
-            } else if potionsCount == 0 {
-                eventLabel.text = "You are out of potions"
-            } else {
-                currentHealth += 5
-                healthLabel.text = "\(currentHealth)"
-                potionsCount -= 1
-                healButton.setTitle("Heal(\(potionsCount))", for: .normal)
-            }
-        } else {
-            if currentHealth == 20 {
-                eventLabel.text = "It would be unwise to heal yourself without being injured"
-            } else if currentHealth >= 21 {
                 currentHealth = 20
                 healthLabel.text = "\(currentHealth)"
             } else if potionsCount == 0 {
@@ -1017,7 +988,6 @@ class ViewController: UIViewController {
                 healButton.setTitle("Heal(\(potionsCount))", for: .normal)
             }
         }
-    }
     
     @IBAction func helpButtonPressed(_ sender: UIButton) {
         if gameOver == false {
