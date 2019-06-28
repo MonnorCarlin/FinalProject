@@ -6,6 +6,8 @@
 //  Copyright © 2019 Laird Connor Stephen Marlin I, Exquire. All rights reserved.
 //
 
+// Music: Eric Skiff - Song Name - Resistor Anthems - Available at http://EricSkiff.com/music
+
 import UIKit
 import AVFoundation
 
@@ -444,7 +446,7 @@ class ViewController: UIViewController {
                 healButton.setTitle("Heal(\(potionsCount))", for: .normal)
                 currentHealth += 50
                 healthLabel.text = "\(currentHealth)"
-                eventLabel.text = "Good job you found the Easter Egg. Here's some free health and potions as a reward. This game was made by me, Connor Marlin, as a final project for my Learn to Code In Swift summer course through Boston College Ireland. Special thanks to Professor Gallaugher for teaching me how to use this. Other than that, just remember these useless numbers: 1560 0565 7602"
+                eventLabel.text = "Good job you found the Easter Egg. Here's some free health and potions as a reward. This game was made by me, Connor Marlin, as a final project for my Learn to Code In Swift summer course through Boston College Ireland. Special thanks to Professor Gallaugher for teaching me how to use this and Eric Skiff for the music. Other than that, just remember these useless numbers: 1560 0565 7602"
             } else {
                 eventLabel.text = "Good job you found the Easter Egg. Here's some free health and potions as a reward. This game was made by me, Connor Marlin, as a final project for my Learn to Code In Swift summer course through Boston College Ireland. Special thanks to Professor Gallaugher for teaching me how to use this. Other than that, just remember these useless numbers: 1560 0565 7602"
             }
