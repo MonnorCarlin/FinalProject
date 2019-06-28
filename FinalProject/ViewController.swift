@@ -286,7 +286,6 @@ class ViewController: UIViewController {
             noticed = false
             if enemies.goblinIsAlive == true { // Goblin's room
                 eventLabel.text = "You pick the left path. As you cautiously enter its room, you notice a drop in visibility, as the interior is dimly lit with only a single torch hung from the ceiling over an empty table. Despite this, you make out a small goblin with its back to you, facing another doorway dead ahead. How will you deal with this creature?"
-                print(enemies.goblinIsAlive)
                 combatMode()
                 currentEnemyHealth = enemies.goblinHealth
                 enemyHealthLabel.text = "\(currentEnemyHealth)"
@@ -323,7 +322,6 @@ class ViewController: UIViewController {
                 enemyHealthLabel.text = "\(currentEnemyHealth)"
             } else if enemies.hobgoblinIsAlive == false {
                 eventLabel.text = "You return to the room once inhabited by the hobgoblin. In the darkness, you see a doorway ahead and to the right"
-                print("I should be in")
             }
         } else if currentRoom == 3.0 {
             eventLabel.text = "Is that a trapdoor you see to a hidden room??? Nope. Just more armor"
@@ -377,7 +375,6 @@ class ViewController: UIViewController {
         } else if currentRoom == 3.0 { // Final Boss room
             currentRoom += 1.0
             eventLabel.text = "With much effort, you push the intimidating door open, leading you into the final room. Like all the others, it slams shut and seals behind you. Inside is a plethora of gold, gems, and all other sorts of treasure. Grand stone pillars are the only things that grow out of the piles of valuables. At the very end of the hall is a wooden throne, modest in comparison to the rest of the room. A hooded figure sits in it. 'Welcome,' he says. 'Press that forward button and come here.'"
-            print(killCount)
         } else if currentRoom == 4.0 {
             if killCount == 0 {
                 pacifistEnding()
@@ -443,7 +440,7 @@ class ViewController: UIViewController {
             if easterEggTracker < 13 {
                 eventLabel.text = "Look man, nothing cool's gonna happen if you keep trying to go other directions. Just press the forward button"
             } else if easterEggTracker == 13 {
-                potionsCount += 100
+                potionsCount += 20
                 healButton.setTitle("Heal(\(potionsCount))", for: .normal)
                 currentHealth += 50
                 healthLabel.text = "\(currentHealth)"
