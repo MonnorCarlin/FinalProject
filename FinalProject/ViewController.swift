@@ -756,9 +756,7 @@ class ViewController: UIViewController {
                 healthLabel.text = "\(currentHealth)"
                 noticed = true
             } else if noticed == true {
-                eventLabel.text = "Skulls probably mean that she's evil"
-                currentHealth -= 3
-                healthLabel.text = "\(currentHealth)"
+                eventLabel.text = "You refrain from speaking to her. Skulls probably mean that she's evil"
             }
         } else if currentRoom == 3.0 { // MARK:- speech sequence for KNIGHT
             if helmetOn == true {
